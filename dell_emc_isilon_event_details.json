@@ -1,0 +1,175 @@
+{
+    "title": "Dell EMC Isilon - Events",
+    "description": null,
+    "widgets": [
+        {
+            "id": 6709034715771052,
+            "layout": {
+                "x": 32,
+                "y": 0,
+                "width": 100,
+                "height": 7
+            },
+            "definition": {
+                "type": "note",
+                "content": "Event Details",
+                "background_color": "vivid_blue",
+                "font_size": "36",
+                "text_align": "center",
+                "vertical_align": "center",
+                "show_tick": false,
+                "tick_pos": "50%",
+                "tick_edge": "left",
+                "has_padding": true
+            }
+        },
+        {
+            "id": 7016256797499104,
+            "layout": {
+                "x": 2.9213634532030985e-7,
+                "y": 1.0596381293402777e-7,
+                "width": 31,
+                "height": 8
+            },
+            "definition": {
+                "type": "image",
+                "url": "https://download.logo.wine/logo/Dell_Technologies/Dell_Technologies-Logo.wine.png",
+                "url_dark_theme": "https://download.logo.wine/logo/Dell_Technologies/Dell_Technologies-Logo.wine.png",
+                "sizing": "cover",
+                "has_background": true,
+                "has_border": true,
+                "vertical_align": "center",
+                "horizontal_align": "center"
+            }
+        },
+        {
+            "id": 5240668173946842,
+            "layout": {
+                "x": 0,
+                "y": 9,
+                "width": 31,
+                "height": 11
+            },
+            "definition": {
+                "type": "note",
+                "content": "# Events\n- This dashboard provides event details of the cluster.",
+                "background_color": "white",
+                "font_size": "14",
+                "text_align": "left",
+                "vertical_align": "top",
+                "show_tick": false,
+                "tick_pos": "50%",
+                "tick_edge": "left",
+                "has_padding": true
+            }
+        },
+        {
+            "id": 2281728772220516,
+            "layout": {
+                "x": 0,
+                "y": 21,
+                "width": 31,
+                "height": 25
+            },
+            "definition": {
+                "type": "note",
+                "content": "## Widgets\n1. Event Details",
+                "background_color": "white",
+                "font_size": "14",
+                "text_align": "left",
+                "vertical_align": "top",
+                "show_tick": false,
+                "tick_pos": "50%",
+                "tick_edge": "left",
+                "has_padding": true
+            }
+        },
+        {
+            "id": 2049245880579944,
+            "layout": {
+                "x": 32,
+                "y": 8,
+                "width": 100,
+                "height": 36
+            },
+            "definition": {
+                "title": "Event Details",
+                "title_size": "16",
+                "title_align": "left",
+                "time": {},
+                "requests": [
+                    {
+                        "response_format": "event_list",
+                        "query": {
+                            "data_source": "logs_stream",
+                            "query_string": "service:cds.emc.isilon.event_details $Cluster",
+                            "indexes": [],
+                            "storage": "hot"
+                        },
+                        "columns": [
+                            {
+                                "field": "status_line",
+                                "width": "auto"
+                            },
+                            {
+                                "field": "timestamp",
+                                "width": "auto"
+                            },
+                            {
+                                "field": "host",
+                                "width": "auto"
+                            },
+                            {
+                                "field": "cluster",
+                                "width": "auto"
+                            },
+                            {
+                                "field": "eventgroup_instance",
+                                "width": "auto"
+                            },
+                            {
+                                "field": "status",
+                                "width": "auto"
+                            },
+                            {
+                                "field": "causes",
+                                "width": "auto"
+                            },
+                            {
+                                "field": "ignore",
+                                "width": "auto"
+                            },
+                            {
+                                "field": "noticed_at",
+                                "width": "auto"
+                            },
+                            {
+                                "field": "resolved",
+                                "width": "auto"
+                            },
+                            {
+                                "field": "resolver",
+                                "width": "auto"
+                            },
+                            {
+                                "field": "resolve_time",
+                                "width": "auto"
+                            }
+                        ]
+                    }
+                ],
+                "type": "list_stream"
+            }
+        }
+    ],
+    "template_variables": [
+        {
+            "name": "Cluster",
+            "prefix": "cds.emc.isilon.cluster",
+            "available_values": [],
+            "default": "*"
+        }
+    ],
+    "layout_type": "free",
+    "notify_list": []
+}
