@@ -1,0 +1,3 @@
+ip_address,username,password,port,min_collection_interval,tags
+10.0.0.1,username,password,8080,300,"xom_org:storage1,xom_app_name:isilon,xom_app_id:app-123,xom_app_support_group:storage_ops,xom_app_support_group_dl:test@example.com,xom_env:prod,xom_hosting_env:storage,xom_hosting_type:saas"
+10.0.0.2,username,password,8080,300,"xom_org:storage2,xom_app_name:isilon,xom_app_id:app-124,xom_app_support_group:storage_ops,xom_app_support_group_dl:test@example.com,xom_env:prod,xom_hosting_env:storage,xom_hosting_type:saas"

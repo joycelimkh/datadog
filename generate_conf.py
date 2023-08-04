@@ -18,6 +18,11 @@ Command usage:
     python generate_conf.py netapp_ontap.csv
     /opt/datadog-agent/embedded/bin/python generate_conf.py dell_emc_isilon.csv
     /opt/datadog-agent/embedded/bin/python generate_conf.py netapp_ontap.csv
+
+
+Note:
+- Make sure the CSV file is in the mentioned format only, without unnecessary whitespaces and commas.
+- Number of values must match the number of keys at the header and in the same order.
 """
 
 import csv
@@ -27,6 +32,7 @@ import sys
 import yaml
 
 SCRIPT_INDICATORS = "=" * 50
+MULTIVALUE = ["tags"]
 
 # start of the script
 print("\n" + SCRIPT_INDICATORS)
@@ -67,21 +73,19 @@ def convert(value: str):
     _bool = conversion(value, to_bool)
     if _bool is not None:
         return _bool
+
     return value
+
+
+# convert comma-separate value to list
+def convert_list(value: str):
+    return [ele.strip() for ele in value.split(",") if ele.strip()]
 
 
 # check if file path argument is provided or not
 if len(sys.argv) < 2:
     print("[ERROR] Please enter the file name in the command for input.")
     exit()
-
-# set log level from args
-log_level = "info"
-if len(sys.argv) >= 3 and sys.argv[2].lower() in ["debug", "info", "warn", "error"]:
-    log_level = sys.argv[2].upper()
-    print(f"[INFO] Log level is set to '{log_level}'.")
-else:
-    print("[INFO] Default log level 'INFO' is set.")
 
 
 # initial empty configuration dictionary
@@ -96,16 +100,14 @@ except FileNotFoundError:
 instances = list(csv_reader)
 new_instances = []
 for instance in instances:
-    new_instances.append({k: convert(v) for k, v in instance.items()})
+    new_instances.append({k: (convert(v) if k not in MULTIVALUE else convert_list(v)) for k, v in instance.items()})
 conf["instances"] = new_instances
-if log_level == "DEBUG":
-    print(f"[DEBUG] Converted configuration content...\n{json.dumps(conf, indent=4)}\n")
+print(f"[INFO] Converted configuration content...\n{json.dumps(conf, indent=4)}\n")
 
 # dump the final configuration to conf.yaml file
 conf_yaml = yaml.dump(conf, default_style=False, indent=2, sort_keys=False)
 conf_yaml = "\t" + conf_yaml.replace("\n", "\n\t")
-if log_level == "DEBUG":
-    print(f"[DEBUG] Generated conf.yaml content...\n{conf_yaml}")
+print(f"[INFO] Generated conf.yaml content...\n{conf_yaml}")
 print("[INFO] conf.yaml is saved in current directory")
 yaml.dump(conf, open("conf.yaml", "w"), default_style=None, indent=2, sort_keys=False)
 
